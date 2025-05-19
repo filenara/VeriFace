@@ -47,7 +47,15 @@ Aşağıdaki metrikler 20 epoch eğitim sonrası hesaplanmıştır.
 
 > Aşağıdaki örnek test verisinden alınmıştır.
 
-[0001_fake_B.png](./results/veriface_pix2pix/test_20/images/0001_fake_B.png)
+
+<p align="center">
+  <img src="./demo_outputs/89_real_A.png" width="200"/>
+  <img src="./demo_outputs/89_fake_B.png" width="200"/>
+  <img src="./demo_outputs/89_real_B.png" width="200"/>
+  <br>
+  <i>Soldan sağa: Girdi (eskiz) | Üretilen Görsel | Gerçek Görsel</i>
+</p>
+
 
 > Daha fazla çıktı için `results/veriface_pix2pix/test_20/images/` klasörüne bakabilirsiniz.
 
