@@ -31,7 +31,7 @@ python train.py --dataroot ./newdataset --name veriface_pix2pix --model pix2pix 
 
 ## 🧪 Test Komutu
 
-python test.py --dataroot ./newdataset --name veriface_pix2pix --model pix2pix --direction AtoB --epoch 50 --gpu_ids 0
+python test.py --dataroot ./newdataset --name veriface_pix2pix --model pix2pix --direction AtoB --epoch 60 --gpu_ids 0
 
 > Test çıktıları `./results/veriface_pix2pix/test_50/images/` klasörüne kaydedilir.
 
