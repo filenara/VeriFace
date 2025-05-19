@@ -35,9 +35,9 @@ python test.py --dataroot ./newdataset --name veriface_pix2pix --model pix2pix -
 
 > Test çıktıları `./results/veriface_pix2pix/test_50/images/` klasörüne kaydedilir.
 
-## 📊 Performans Ölçütleri (20 Epoch Eğitim Sonrası)
+## 📊 Performans Ölçütleri (60 Epoch Eğitim Sonrası)
 
-Aşağıdaki metrikler 20 epoch eğitim sonrası hesaplanmıştır.  
+Aşağıdaki metrikler 60 epoch eğitim sonrası hesaplanmıştır.  
 `performans.py` scripti ile SSIM ve PSNR değerleri elde edilmiştir.
 
 | Metrik | Sonuç      |
