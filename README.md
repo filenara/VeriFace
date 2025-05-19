@@ -1,6 +1,8 @@
 # 🧠 VeriFace - Sketch to Real Face Generation with Pix2Pix
 
 **Veriface**, sadece eskiz (sketch) görselleri kullanarak gerçekçi yüz fotoğrafları üretmek için geliştirilmiş bir görüntüden görüntüye çeviri projesidir. Projede [Pix2Pix](https://phillipi.github.io/pix2pix/) GAN mimarisi kullanılmıştır.
+> 📌 **Not:** Bu projede kullanılan Pix2Pix mimarisi literatürde tanımlı bir yapıdır. Ancak bu çalışma kapsamında model tamamen **kişisel veri seti ile sıfırdan eğitilmiş**, herhangi bir hazır (pretrained) model ağırlığı kullanılmamıştır.
+
 
 ## 📁 Proje Yapısı
 
