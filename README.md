@@ -42,8 +42,8 @@ Aşağıdaki metrikler 20 epoch eğitim sonrası hesaplanmıştır.
 
 | Metrik | Sonuç      |
 |--------|------------|
-| SSIM   | 0.4364     |
-| PSNR   | 14.20 dB   |
+| SSIM   | 0.4583     |
+| PSNR   | 15.06 dB   |
 
 ## 📸 Örnek Çıktılar
 
