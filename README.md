@@ -1,77 +1,76 @@
-# 🎭 VeriFace – Tanık İfadesinden Şüpheli Yüz Eskizi Üreten Yapay Zekâ Sistemi
+# 🧠 VeriFace - Sketch to Real Face Generation with Pix2Pix
 
-## 📌 Proje Tanımı
-**VeriFace**, bir tanığın sözlü ifadesine dayanarak, olası şüphelinin yüzünü **karakalem eskiz tarzında** görselleştiren, tamamen yerel çalışan bir yapay zekâ sistemidir.
+**Veriface**, sadece eskiz (sketch) görselleri kullanarak gerçekçi yüz fotoğrafları üretmek için geliştirilmiş bir görüntüden görüntüye çeviri projesidir. Projede [Pix2Pix](https://phillipi.github.io/pix2pix/) GAN mimarisi kullanılmıştır.
 
-Bu proje, yapay zekâ destekli adli analiz uygulamalarının bir prototipidir ve *üretken yapay zekâ* tekniklerini kullanarak sözlü tariften görsel üretmeyi hedefler.
+## 📁 Proje Yapısı
 
----
-
-## 🎯 Projenin Amacı
-- Kullanıcının verdiği tanık tarifinden AI destekli bir **şüpheli yüz eskizi** üretmek  
-- Kısa sürede etkili bir demo ve teknik gösterim sunmak
-
----
-
-## 🖥️ Kullanılan Teknolojiler
-| Bileşen | Açıklama |
-|--------|----------|
-| **Stable Diffusion WebUI (yerel)** | Metinden görsel üretimi sağlar |
-| **Prompt Yapılandırması** | Tanık ifadeleriyle uyumlu metin komutları hazırlanır |
-| **Python** | Girdi okuma, çıktı yönetimi ve dosyalama |
-
----
-
-## 🔧 Sistem Mimarisi
 ```
-[Tanık Tarifi (Türkçe)] → [İngilizce Prompt'a Dönüştürme] → [Stable Diffusion WebUI] → [Eskiz.png]
+Veriface/
+├── pytorch-CycleGAN-and-pix2pix/      # Ana model kodları
+├── performans.py                      # SSIM ve PSNR değerlendirme scripti
+├── requirements.txt                   # Gerekli Python paketleri
+├── README.md                          # Bu dosya
+├── results/                           # Test çıktıları (çıkarılabilir)
+├── checkpoints/                       # Eğitim çıktıları (çıkarılabilir)
+└── newdataset/                        # A|B formatlı görseller (yüklenmez)
 ```
 
----
+## 🧪 Kullanılan Veri Seti
 
-## ✍️ Örnek Tanık İfadesi
-```text
-30'larında, kısa saçlı, kalın kaşlı, sinirli bakışlı bir adam
-```
+- [CUHK Face Sketch Database (CUFS)](https://github.com/junhocho/FSNet/blob/master/README.md#cufs-dataset) baz alınarak oluşturulmuştur.
+- Toplam ~10.000 örnekten oluşan A|B hizalanmış yüz ve sketch çiftleri kullanılmıştır.
+- Eğitim ve test verileri `newdataset/train` ve `newdataset/test` klasörlerine yerleştirilmiştir (bu klasör `.gitignore` ile dışlanmıştır).
 
-Çeviri sonrası prompt örneği:
-```text
-A man in his 30s with short hair, thick eyebrows, angry expression, pencil sketch style, grayscale
-```
+## 🚀 Eğitim Komutu
 
----
+python train.py --dataroot ./newdataset --name veriface_pix2pix --model pix2pix --direction AtoB --batch_size 4 --n_epochs 50 --n_epochs_decay 50 --gpu_ids 0 --display_id -1
 
-## 📂 Proje Klasör Yapısı
-```
-veriface/
-├── ifadeler.txt              # Tanık tarifleri (Türkçe)
-├── cevir_ve_uret.py          # Prompt çevirisi ve görsel üretimi
-├── cikti_gorseller/          # Üretilen eskizler
-├── stable-diffusion-webui/   # Yerel üretim arayüzü
-├── README.md
-└── requirements.txt          # Ortam bağımlılıkları
-```
+> Eğitim tamamlandığında `./checkpoints/veriface_pix2pix/` klasörüne model ağırlıkları kaydedilir.
 
----
+## 🧪 Test Komutu
 
+python test.py --dataroot ./newdataset --name veriface_pix2pix --model pix2pix --direction AtoB --epoch 50 --gpu_ids 0
 
-## 📊 Sonuçlar ve Yorum
-VeriFace, tanık ifadelerinin yapay zekâ ile görselleştirilmesi konusunda ilk adım niteliğindedir.
+> Test çıktıları `./results/veriface_pix2pix/test_50/images/` klasörüne kaydedilir.
 
-Projede kullanılan yöntemler şunları göstermektedir:
-- Kısa ve doğal tanık ifadeleri ile karakteristik yüzler üretilebilmektedir  
-- Karakalem estetiği, şüpheliye dair genel bir fikir vermek için yeterlidir  
-- Metin → görsel üretim hatları, sade ve güçlü uygulamalara dönüşebilir
+## 📊 Performans Ölçütleri (20 Epoch Eğitim Sonrası)
 
----
+Aşağıdaki metrikler 20 epoch eğitim sonrası hesaplanmıştır.  
+`performans.py` scripti ile SSIM ve PSNR değerleri elde edilmiştir.
 
-## 🔮 Gelecekte Geliştirilebilecek Yönler
-- Türkçe'den İngilizce'ye otomatik çeviri entegrasyonu  
-- Aynı tariften birden fazla varyasyon üretimi  
-- Farklı tanıklardan gelen tariflerin birleştirilmesi  
-- Eskizden fotogerçekçi yüze geçiş modeli
+| Metrik | Sonuç      |
+|--------|------------|
+| SSIM   | 0.4364     |
+| PSNR   | 14.20 dB   |
 
----
+## 📸 Örnek Çıktılar
 
-## 🧑‍💻 Geliştirici
-> Bu proje Elif Rana Karabulut tarafından, üretken yapay zekâ alanında bireysel araştırma ve demo amaçlı geliştirilmiştir.
+> Aşağıdaki örnek test verisinden alınmıştır.
+
+[0001_fake_B.png](./results/veriface_pix2pix/test_20/images/0001_fake_B.png)
+
+> Daha fazla çıktı için `results/veriface_pix2pix/test_20/images/` klasörüne bakabilirsiniz.
+
+## 🛠 Gereksinimler
+
+torch  
+torchvision  
+opencv-python  
+scikit-image  
+tqdm  
+
+Tüm kütüphaneleri tek seferde kurmak için:
+
+pip install -r requirements.txt
+
+## 📌 Notlar
+
+- Bu proje sadece eğitim ve araştırma amaçlı geliştirilmiştir.
+- Yüksek kaliteli çıktı için daha fazla epoch, veri büyütme ve stil kaybı (perceptual loss) gibi eklemeler yapılabilir.
+- Eğitim verisi GitHub’a yüklenmemiştir.
+
+## 👩‍💻 Geliştiren
+
+**Elif Rana Karabulut**  
+3. sınıf Yapay Zeka Mühendisliği Öğrencisi  
+Ostim Teknik Üniversitesi
