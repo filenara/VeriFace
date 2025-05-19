@@ -1,0 +1,16 @@
+# Eğitim çıktıları
+checkpoints/
+results/
+newdataset/
+*.pth
+*.pt
+
+# Derleme/önbellek dosyaları
+__pycache__/
+*.pyc
+*.pyo
+
+# Ortam dosyaları
+.env
+.vscode/
+.DS_Store
