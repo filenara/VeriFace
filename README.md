@@ -10,7 +10,6 @@
 Veriface/
 ├── pytorch-CycleGAN-and-pix2pix/      # Ana model kodları
 ├── performans.py                      # SSIM ve PSNR değerlendirme scripti
-├── requirements.txt                   # Gerekli Python paketleri
 ├── README.md                          # Bu dosya
 ├── results/                           # Test çıktıları (çıkarılabilir)
 ├── checkpoints/                       # Eğitim çıktıları (çıkarılabilir)
